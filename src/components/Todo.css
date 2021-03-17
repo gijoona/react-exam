@@ -1,0 +1,38 @@
+.todo {
+  border: 1px solid black;
+  padding: 10px 0px;
+  margin: 5px 10px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+  
+.todo-done-toggle {
+  display: inline-block;
+  border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.todo-done-toggle.done {
+  border: 1px solid cornflowerblue;
+  background-color: cornflowerblue;
+}
+
+.todo-done-toggle.ing {
+  border: 1px solid black;
+}
+
+.todo-contents {
+  width: 60%;
+}
+
+.todo-subject {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.todo-description {
+  color: darkgray;
+}
