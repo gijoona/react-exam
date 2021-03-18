@@ -8,7 +8,6 @@ class Todo extends React.Component {
 
   done = (id) => {
     this.props.onToggle(id);
-    // this.setState(state => ({ isDone: !state.isDone }));
   }
 
   render () {

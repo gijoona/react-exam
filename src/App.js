@@ -46,30 +46,29 @@ class App extends React.Component {
     };
   }
 
-  test = (id) => {
-    console.log("call Root Function", id);
-    this.setState((state) => ({
-      todos: state.todos.map((todo) => {
+  toggleTodoDone = (id) => {
+    let tempTodos = [...this.state.todos, ...[]];
+    this.setState({
+      todos: tempTodos.map((todo) => {
         if (todo.id === id) todo.isDone = !todo.isDone;
         return todo;
       }),
-    }));
-    console.log(this.state.todos);
-  };
+    });
+  }
 
   render() {
-    const todos = this.state.todos;
+    let todos = this.state.todos;
     return (
       <div className="App">
         <div>할 일</div>
         <Todos
           todos={todos.filter((todo) => !todo.isDone)}
-          onToggleTodoDone={this.test}
+          onToggleTodoDone={this.toggleTodoDone}
         />
         <div>끝난 일</div>
         <Todos
           todos={todos.filter((todo) => todo.isDone)}
-          onToggleTodoDone={this.test}
+          onToggleTodoDone={this.toggleTodoDone}
         />
       </div>
     );
