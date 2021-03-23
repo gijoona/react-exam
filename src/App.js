@@ -46,6 +46,20 @@ class App extends React.Component {
     };
   }
 
+  addTodo = (evt) => {
+    if (evt.keyCode === 13) {
+      let newTodo = {
+        id: this.state.todos.length + 1,
+        subject: evt.target.value,
+        description: '',
+        createDate: '20210323000000',
+        isDone: false
+      }
+      this.setState({ todos: [...this.state.todos, ...[newTodo]]});
+      evt.target.value = '';
+    }
+  }
+
   toggleTodoDone = (id) => {
     let tempTodos = [...this.state.todos, ...[]];
     this.setState({
@@ -60,16 +74,21 @@ class App extends React.Component {
     let todos = this.state.todos;
     return (
       <div className="App">
-        <div>할 일</div>
-        <Todos
-          todos={todos.filter((todo) => !todo.isDone)}
-          onToggleTodoDone={this.toggleTodoDone}
-        />
-        <div>끝난 일</div>
-        <Todos
-          todos={todos.filter((todo) => todo.isDone)}
-          onToggleTodoDone={this.toggleTodoDone}
-        />
+        <section>
+          <input placeholder="할 일을 입력해주세요." onKeyDown={(evt) => this.addTodo(evt)} />
+        </section>
+        <section>할 일
+          <Todos
+            todos={todos.filter((todo) => !todo.isDone)}
+            onToggleTodoDone={this.toggleTodoDone}
+          />
+        </section>
+        <section>끝난 일
+          <Todos
+            todos={todos.filter((todo) => todo.isDone)}
+            onToggleTodoDone={this.toggleTodoDone}
+          />
+        </section>
       </div>
     );
   }
