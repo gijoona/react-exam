@@ -46,6 +46,16 @@ class App extends React.Component {
     };
   }
 
+  toggleTodo = (id) => {
+    let tempTodos = [...this.state.todos, ...[]];
+    this.setState({
+      todos: tempTodos.map((todo) => {
+        if (todo.id === id) todo.isDone = !todo.isDone;
+        return todo;
+      }),
+    });
+  }
+
   addTodo = (evt) => {
     if (evt.keyCode === 13) {
       let newTodo = {
@@ -60,13 +70,14 @@ class App extends React.Component {
     }
   }
 
-  toggleTodoDone = (id) => {
-    let tempTodos = [...this.state.todos, ...[]];
+  editTodo = (todo) => {
+
+  }
+
+  removeTodo = (id) => {
+    let tempTodo = this.state.todos;
     this.setState({
-      todos: tempTodos.map((todo) => {
-        if (todo.id === id) todo.isDone = !todo.isDone;
-        return todo;
-      }),
+      todos: tempTodo.filter(todo => todo.id !== id)
     });
   }
 
@@ -75,18 +86,23 @@ class App extends React.Component {
     return (
       <div className="App">
         <section>
-          <input placeholder="할 일을 입력해주세요." onKeyDown={(evt) => this.addTodo(evt)} />
+          <input className="todo-input" placeholder="할 일을 입력해주세요." onKeyDown={(evt) => this.addTodo(evt)} />
         </section>
+        <hr />
         <section>할 일
           <Todos
             todos={todos.filter((todo) => !todo.isDone)}
-            onToggleTodoDone={this.toggleTodoDone}
+            onToggleTodo={this.toggleTodo}
+            onEditTodo={this.editTodo}
+            onRemoveTodo={this.removeTodo}
           />
         </section>
         <section>끝난 일
           <Todos
             todos={todos.filter((todo) => todo.isDone)}
-            onToggleTodoDone={this.toggleTodoDone}
+            onToggleTodo={this.toggleTodo}
+            onEditTodo={this.editTodo}
+            onRemoveTodo={this.removeTodo}
           />
         </section>
       </div>

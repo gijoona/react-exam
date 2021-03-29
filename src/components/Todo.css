@@ -1,10 +1,16 @@
-.todo {
+.todo-group {
   border: 1px solid black;
-  padding: 10px 0px;
   margin: 5px 10px 0px;
+  display: flex;
+  justify-content: end;
+}
+
+.todo {
+  padding: 10px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  width: 90%;
 }
   
 .todo-done-toggle {
@@ -35,4 +41,36 @@
 
 .todo-description {
   color: darkgray;
+}
+
+.todo-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 10%;
+  cursor: pointer;  
+}
+
+.todo-btn.edit {
+  color: white;
+  background-color: dodgerblue;
+  border: 1px solid dodgerblue;
+}
+
+.todo-btn.edit:hover {
+  background-color: royalblue;
+  border: 1px solid royalblue;
+}
+
+.todo-btn.remove {
+  color: white;
+  background-color: tomato;
+  border: 1px solid tomato;
+}
+
+.todo-btn.remove:hover {
+  background-color: brown;
+  border: 1px solid brown;
 }

@@ -6,9 +6,16 @@ class Todos extends React.Component {
     super(props);
   }
 
-  onToggleDone = (id) => {
-    console.log('call onToggleDone', id);
-    this.props.onToggleTodoDone(id);
+  onToggleTodo = (id) => {
+    this.props.onToggleTodo(id);
+  }
+
+  onEditTodo = (todo) => {
+    this.props.onEditTodo(todo);
+  }
+
+  onRemoveTodo = (id) => {
+    this.props.onRemoveTodo(id);
   }
 
   render () {
@@ -17,12 +24,10 @@ class Todos extends React.Component {
         {this.props.todos.map((todo) => {
           return (
             <Todo key={todo.id}
-              id={todo.id} 
-              subject={todo.subject} 
-              description={todo.description}
-              createDate={todo.createDate}
-              isDone={todo.isDone}
-              onToggle={(id) => this.onToggleDone(id)}
+              {...todo}
+              onToggle={(id) => this.onToggleTodo(id)}
+              onEdit={(todo) => this.onEditTodo(todo)}
+              onRemove={(id) => this.onRemoveTodo(id)}
             />)
         })}
       </div>

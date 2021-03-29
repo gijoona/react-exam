@@ -5,3 +5,14 @@ html {
 .App {
   margin: 15px;
 }
+
+.todo-input {
+  width: 99%;
+  height: 2rem;
+  font-size: large;
+  border: none;
+}
+
+.todo-input:focus {
+  outline: none;
+}

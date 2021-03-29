@@ -1,28 +1,126 @@
 import React from 'react';
 import './Todo.css';
 
+class EditModal extends React.Component {
+  overlayStyle = {
+    backgroundColor: 'black',
+    opacity: '0.5',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+  }
+  
+  modalStyle = {
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+  
+  contentStyle = {
+    backgroundColor: 'white',
+    width: '60%',
+    height: '80%',
+    border: '1px solid white',
+    borderRadius: '3%',
+    padding: '20px',
+    zIndex: '100',
+    display: 'flex',
+    flexDirection: 'column'
+  }
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      display: false
+    }
+  }
+
+  componentDidMount = () => {
+    this.props.onRef(this);
+  }
+
+  componentWillUnmount = () => {
+    this.props.onRef(undefined);
+  }
+
+  show = () => {
+    this.setState({ display: true });
+  }
+
+  hide = () => {
+    console.log('hide');
+    this.setState({ display: false });
+  }
+
+  render () {
+    return (
+      this.state.display? 
+        (
+          <div>
+            <div style={this.modalStyle}>
+              <div style={this.overlayStyle} onClick={() => this.hide()}></div>
+              <div style={this.contentStyle}>
+                <input type="text" value={this.props.subject} />
+                <input type="text" value={this.props.description} />
+                <button onClick={() => this.hide()}>저장</button>
+                <button onClick={() => this.hide()}>취소</button>
+              </div>
+            </div>
+          </div>
+        ) 
+        : null
+    );
+  }
+}
+
 class Todo extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  done = (id) => {
+  onToggle = (id) => {
     this.props.onToggle(id);
+  }
+
+  onEdit = (todo) => {
+    this.props.onEdit(todo);
+  }
+
+  onRemove = (id) => {
+    this.props.onRemove(id);
+  }
+
+  openEditModal = () => {
+    this.editModal.show();
   }
 
   render () {
     const todoInfo = this.props;
     return (
-      <div className="todo">
-        <label 
-          className={"todo-done-toggle" + (todoInfo.isDone ? " done" : " ing")}
-          onClick={() => this.done(todoInfo.id)}
-          />
-        <div className="todo-contents">
-          <div className="todo-subject">{todoInfo.subject}</div>
-          <div className="todo-description">{todoInfo.description}</div>
+      <div>
+        <div className="todo-group">
+          <div className="todo">
+            <label 
+              className={"todo-done-toggle" + (todoInfo.isDone ? " done" : " ing")}
+              onClick={() => this.onToggle(todoInfo.id)}
+              />
+            <div className="todo-contents">
+              <div className="todo-subject">{todoInfo.subject}</div>
+              <div className="todo-description">{todoInfo.description}</div>
+            </div>
+            <div className="todo-create-date">{todoInfo.createDate}</div>
+          </div>
+          <div className="todo-btn edit" onClick={() => this.openEditModal()}>수정</div>
+          <div className="todo-btn remove" onClick={() => this.onRemove(todoInfo.id)}>삭제</div>
         </div>
-        <div className="todo-create-date">{todoInfo.createDate}</div>
+        <EditModal {...todoInfo} onRef={ref => this.editModal = ref}/>
       </div>
     );
   }
