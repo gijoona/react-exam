@@ -70,8 +70,14 @@ class App extends React.Component {
     }
   }
 
-  editTodo = (todo) => {
-
+  editTodo = (todoData) => {
+    let tempTodos = this.state.todos;
+    this.setState({
+      todos: tempTodos.map(todo => {
+              if (todo.id === todoData.id) todo = {...todo, ...todoData};
+              return todo;
+            })
+    });
   }
 
   removeTodo = (id) => {

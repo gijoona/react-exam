@@ -32,12 +32,16 @@ class EditModal extends React.Component {
     padding: '20px',
     zIndex: '100',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   }
 
   constructor (props) {
     super(props);
     this.state = {
+      id: props.id,
+      subject: '',
+      description: '',
+      createDate: '',
       display: false
     }
   }
@@ -50,13 +54,17 @@ class EditModal extends React.Component {
     this.props.onRef(undefined);
   }
 
-  show = () => {
+  onShow = () => {
     this.setState({ display: true });
   }
 
-  hide = () => {
-    console.log('hide');
+  onHide = () => {
     this.setState({ display: false });
+  }
+
+  onSave = () => {
+    this.props.onSave(this.state);
+    this.onHide();
   }
 
   render () {
@@ -65,12 +73,13 @@ class EditModal extends React.Component {
         (
           <div>
             <div style={this.modalStyle}>
-              <div style={this.overlayStyle} onClick={() => this.hide()}></div>
+              <div style={this.overlayStyle} onClick={() => this.onHide()}></div>
               <div style={this.contentStyle}>
-                <input type="text" value={this.props.subject} />
-                <input type="text" value={this.props.description} />
-                <button onClick={() => this.hide()}>저장</button>
-                <button onClick={() => this.hide()}>취소</button>
+                <input type="text" defaultValue={this.props.subject} onChange={(evt) => this.setState({subject: evt.target.value})}/>
+                <input type="text" defaultValue={this.props.description} onChange={(evt) => this.setState({description: evt.target.value})}/>
+                <input type="text" defaultValue={this.props.createDate} onChange={(evt) => this.setState({createDate: evt.target.value})}/>
+                <button onClick={() => this.onSave()}>저장</button>
+                <button onClick={() => this.onHide()}>취소</button>
               </div>
             </div>
           </div>
@@ -98,7 +107,7 @@ class Todo extends React.Component {
   }
 
   openEditModal = () => {
-    this.editModal.show();
+    this.editModal.onShow();
   }
 
   render () {
@@ -120,7 +129,7 @@ class Todo extends React.Component {
           <div className="todo-btn edit" onClick={() => this.openEditModal()}>수정</div>
           <div className="todo-btn remove" onClick={() => this.onRemove(todoInfo.id)}>삭제</div>
         </div>
-        <EditModal {...todoInfo} onRef={ref => this.editModal = ref}/>
+        <EditModal {...todoInfo} onRef={ref => this.editModal = ref} onSave={(todo) => this.onEdit(todo)}/>
       </div>
     );
   }
