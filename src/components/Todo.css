@@ -54,23 +54,23 @@
 }
 
 .todo-btn.edit {
-  color: white;
-  background-color: dodgerblue;
-  border: 1px solid dodgerblue;
+  background-color: lightskyblue;
+  border: 1px solid lightskyblue;
 }
 
 .todo-btn.edit:hover {
+  color: white;
   background-color: royalblue;
   border: 1px solid royalblue;
 }
 
 .todo-btn.remove {
-  color: white;
-  background-color: tomato;
-  border: 1px solid tomato;
+  background-color: lightcoral;
+  border: 1px solid lightcoral;
 }
 
 .todo-btn.remove:hover {
+  color: white;
   background-color: brown;
   border: 1px solid brown;
 }
